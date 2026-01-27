@@ -1,4 +1,6 @@
 import http from 'node:http';
+import { InferenceClient } from '@huggingface/inference';
+
 import { getDataFromDB } from './database/db.js'
 import { sendJSONResponse } from './utils/sendJSONResponse.js';
 import { getDataByPathParams } from './utils/getDataByPathParams.js';
@@ -31,6 +33,7 @@ const server = http.createServer(async (req, res) => {
     1. Check the ‘method’ property on the req object.
     Only serve our string if it’s ‘GET’.
     */
+
     if (urlObj.pathname === '/api' && req.method === 'GET') {
 
         /*
@@ -67,8 +70,35 @@ const server = http.createServer(async (req, res) => {
         const country = req.url.split('/').pop();
         const filteredData = getDataByPathParams(destinations, 'country', country);
         sendJSONResponse(res, 200, filteredData);
-    } else if (req.url.startsWith('/api/chat') && req.method === 'GET') {
-        sendJSONResponse(res, 200, { message: "You will quering to AI Hugging Face... " });
+    } else if (req.url.startsWith('/api/chat') && req.method === 'POST') {
+        const SYSTEM_PROMPT = `
+            You are an assistant that receives a list of ingredients that a user has and suggests a recipe they could make with some or all of those ingredients. You don't need to use every ingredient they mention in your recipe. The recipe can include additional ingredients they didn't mention, but try not to include too many extra ingredients. Format your response in markdown to make it easier to render to a web page
+        `;
+        const ingredientsString = ["all the main spices", "pasta", "ground beef", "tomato paste"];
+        const accessToken = "hf_xxxYourHuggingFaceAccessTokenxxx";
+        const hf = new InferenceClient(accessToken);
+        const out = await hf.chatCompletion({
+            // model: "mistralai/Mixtral-8x7B-v0.1",
+            // provider: "together",
+            model: "Qwen/Qwen3-32B",
+            provider: "cerebras",
+            messages: [
+                { role: "system", content: SYSTEM_PROMPT },
+                { role: "user", content: `I have ${ingredientsString}. Please give me a recipe you'd recommend I make!` },
+            ],
+            max_tokens: 1024,
+            temperature: 0.1,
+        });
+
+        sendJSONResponse(res, 200, { content: out.choices[0].message.content });
+
+    } else if (req.method === 'OPTIONS') {
+        res.setHeader('Access-Control-Allow-Origin', '*'); // Or specifically 'http://localhost:5173'
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+        res.writeHead(204);
+        res.end();
+        return;
     } else {
         /*
         Challenge:
@@ -78,6 +108,8 @@ const server = http.createServer(async (req, res) => {
         */
         sendJSONResponse(res, 404, { error: "not found", message: "The requested route does not exist" });
     }
+
+
 });
 
 /*

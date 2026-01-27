@@ -9,5 +9,8 @@
     "start": "node server.js"
   },
   "author": "Dave Torrez",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@huggingface/inference": "^4.13.10"
+  }
 }

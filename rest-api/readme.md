@@ -21,7 +21,6 @@ El proyecto está pensado para ser consumido por **aplicaciones web, móviles o 
 ## ⚙️ Tecnologías utilizadas
 
 * **Node.js**
-* **Express.js**
 
 
 ---
@@ -79,12 +78,30 @@ Content-Type: application/json
 | 500    | Error interno |
 
 ---
+## Init the project
+```bash
+npm init
+
+name: wild-horizons
+version: default
+description: a dataset of the planet’s most interesting places
+entry point: server.js
+test command: default
+git repository: default
+keywords: default
+authour: your name
+license: default
+
+
+---
 
 ## ▶️ Instalación y ejecución
 
 ```bash
-npm install
-npm run dev
+npm start
+
+node server.js
+
 ```
 
 Variables de entorno:

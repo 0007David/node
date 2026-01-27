@@ -9,6 +9,12 @@
 - Handling request/ responses
 - Filtering data
 - Extracting query params
+- Packages.json is the blueprint
+  - Contains metadata (name, version, author, description, etc.)
+  - Simplifies collaboration
+    - Manage dependencies
+    - Define scripts
+ - Nodemon for auto-restarting server on file changes
 
 ## Stretch Goals
 
