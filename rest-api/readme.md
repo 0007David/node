@@ -29,11 +29,11 @@ El proyecto está pensado para ser consumido por **aplicaciones web, móviles o 
 
 | Método | Endpoint           | Descripción        |
 | ------ | ------------------ | ------------------ |
-| GET    | /api/resources     | Listar recursos    |
-| POST   | /api/resources     | Crear recurso      |
-| GET    | /api/resources/:id | Obtener recurso    |
-| PUT    | /api/resources/:id | Actualizar recurso |
-| DELETE | /api/resources/:id | Eliminar recurso   |
+| GET    | /api               | Listar todo recurso|
+| GET    | /api?quey_params   | Listar by query    |
+| GET    | /api/continent/name| Listar by continent|
+| GET    | /api/country/name  | Listar by country  |
+| POST   | /api/chat          | Obtener Receta IA  |
 
 ---
 

@@ -4,6 +4,7 @@ import { InferenceClient } from '@huggingface/inference';
 import { getDataFromDB } from './database/db.js'
 import { sendJSONResponse } from './utils/sendJSONResponse.js';
 import { getDataByPathParams } from './utils/getDataByPathParams.js';
+import { getDataByQueryParams } from './utils/getDataByQueryParams.js'
 
 const PORT = 8000;
 
@@ -24,37 +25,44 @@ const server = http.createServer(async (req, res) => {
 
     const urlObj = new URL(req.url, `http://${req.headers.host}`);
 
-    const queryObj = Object.fromEntries(urlObj.searchParams);
-
-    console.log(queryObj);
-
+    const queryObj = Object.fromEntries(urlObj.searchParams);    
     /*
-    Challenge: 
-    1. Check the ‘method’ property on the req object.
-    Only serve our string if it’s ‘GET’.
+        Challenge: 
+        1. Check the ‘method’ property on the req object.
+        Only serve our string if it’s ‘GET’.
     */
 
     if (urlObj.pathname === '/api' && req.method === 'GET') {
 
         /*
-        Challenge:
+            Challenge:
 
-        1. Update filteredData so it holds only the objects the client wants 
-            based on query params. If the client doesn’t use any query params, 
-            serve all of the data.
-            The query params we are accepting are:
-            'country', 'continent', and 'is_open_to_public'.
+            1. Update filteredData so it holds only the objects the client wants 
+                based on query params. If the client doesn’t use any query params, 
+                serve all of the data.
+                The query params we are accepting are:
+                'country', 'continent', and 'is_open_to_public'.
 
-            Keep our code tidy by doing the the filtering in a util function.
+                Keep our code tidy by doing the the filtering in a util function.
+        
+            Challenge:
+            1. Access the ‘setHeader’ method on the response object and pass in two strings to set the      
+            Content-Type to ‘application/json’ - watch out for casing! 
+            2. Access the 'statusCode' property and set it to 200.
         */
-
         /*
-        Challenge:
-        1. Access the ‘setHeader’ method on the response object and pass in two strings to set the      
-        Content-Type to ‘application/json’ - watch out for casing! 
-        2. Access the 'statusCode' property and set it to 200.
+            Challenge:
+
+            1. Update filteredData so it holds only the objects the client wants 
+                based on query params. If the client doesn’t use any query params, 
+                serve all of the data.
+                The query params we are accepting are:
+                'country', 'continent', and 'is_open_to_public'.
+
+                Keep our code tidy by doing the the filtering in a util function.
         */
-        sendJSONResponse(res, 200, destinations);
+       let filteredData = getDataByQueryParams(destinations, queryObj);        
+        sendJSONResponse(res, 200, filteredData);
 
     } else if (req.url.startsWith('/api/continent') && req.method === 'GET') {
         /* Challenge:
@@ -94,7 +102,7 @@ const server = http.createServer(async (req, res) => {
 
     } else if (req.method === 'OPTIONS') {
         res.setHeader('Access-Control-Allow-Origin', '*'); // Or specifically 'http://localhost:5173'
-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
         res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
         res.writeHead(204);
         res.end();
