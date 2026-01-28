@@ -1,7 +1,7 @@
 import http from 'node:http';
 import { serveStatic } from './utils/serveStatic.js';
 import { getData } from './utils/getData.js';
-import { handleGet } from './handlers/routeHandlers.js';
+import { handleGet, handlePost } from './handlers/routeHandlers.js';
 
 /*
     Challenge #0: 
@@ -19,23 +19,23 @@ import { handleGet } from './handlers/routeHandlers.js';
         3. Open the browser to see your first served HTML.
 */
 const __dirname = import.meta.dirname;
-
-
-console.log(await getData());
+//console.log(await getData());
 
 const server = http.createServer(async (req, res) => {
 
     if (req.url === '/api') {
         if (req.method === 'GET') {
             return await handleGet(res)
+        } else if (req.method === 'POST') {
+            return await handlePost(res)
         }
         /*
             Challenge: 
             1. Add a route for a POST request to '/api'.
             2. When a request comes in, pass the req and res to handlePost().
         */
-
-    } else if (req.url === '/api') {
+    }
+    else if (!req.url.startsWith('/api')) {
         await serveStatic(req, res, __dirname);
     }
 });
