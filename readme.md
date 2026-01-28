@@ -28,7 +28,7 @@
       - The path to the resource from that directory
     - Read the resources we want to serve using FS module
     - Send those resources to the client
-  - Using import.meta: <br> is an object specific to the modular JS environment, which provides metadata about the current module.
+  - Using import.meta: <br> is an object specific to the modular JS environment, which provides metadata about the current module.  
 - Provide data via an API
 - Add user input to our data
 - Extra
@@ -37,8 +37,21 @@
 We will be studying:
 
 - The FS module
-- The path module
+- The path module <br> 
+  - Absolute Path: 
+    - show the full location of the file or folder on the system where your code is running. 
+    - Always the same, no matter where you run your main script (server.js in our case).
+    - Independent of the current working directory (CWD).
+  - Relative Path:
+    - Relate to the file it appears in.
+    - Often includes <.> (current folder) or <..> (up one folder).
+    - We often see this in import statements.
+  - Relatives paths creaded with Path Module:
+    - Start the current Working Directory.
+    - Are therefore affected bu changes to the CWD.
+    - That means they are not as safe, but sometimes more flexible.
 - Serving static assets
+- Global vars in Node.js
 - Using a dependency to sanitize input
 - Event Emitters & Server-sent events
 

@@ -1,4 +1,7 @@
 import http from 'node:http';
+import path from 'node:path';
+import { serveStatic } from './utils/serveStatic.js';
+import { getData } from './utils/getData.js';
 
 /*
     Challenge #0: 
@@ -15,16 +18,15 @@ import http from 'node:http';
         2. Listen on port 8000 and log a connection message to the console.
         3. Open the browser to see your first served HTML.
 */
+const __dirname = import.meta.dirname;
 
-console.log(import.meta.dirname)
 
-const server = http.createServer((req, res) => {
-    res.statusCode = 200
-    // res.setHeader('Access-Control-Allow-Origin', '*')
-    // res.setHeader('Access-Control-Allow-Methods', 'GET')
-    // res.writeHead(200, {'Content-Type': 'text/html', 'Access-Control-Allow-Methods': 'POST'})
-    res.setHeader('Content-Type', 'text/html')
-    res.end('<html><h1>The server is working</h1></html>');
+console.log(await getData());
+
+const server = http.createServer(async (req, res) => {
+
+    await serveStatic(req, res, __dirname);
+
 });
 
 const PORT = 8001;
