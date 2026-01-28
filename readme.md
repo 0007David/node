@@ -21,6 +21,14 @@
 ## From the other Side
 
 - Serve assests
+  - Reading and serving data
+    - Identify what resources the client wants.
+    - Identify the path to that resource:
+      - The current module's directory
+      - The path to the resource from that directory
+    - Read the resources we want to serve using FS module
+    - Send those resources to the client
+  - Using import.meta: <br> is an object specific to the modular JS environment, which provides metadata about the current module.
 - Provide data via an API
 - Add user input to our data
 - Extra
@@ -33,6 +41,13 @@ We will be studying:
 - Serving static assets
 - Using a dependency to sanitize input
 - Event Emitters & Server-sent events
+
+Diferencia res.writeHead() y res.setHeader():
+
+- res.setHeader(): Sets a response header but doesn't send it immediately. Allows you to set or modify headers indivially, at any point before sending the response.
+  - Potenncial problem: A header set using setHeader() after writeHead() will not be included in the response.<br> A header set using setHeader() can be overruled by a header set with writeHead().
+  
+- res.writeHead(): Sends any headers immediately. No further modification is posible.
 
 ## Stretch Goals
 

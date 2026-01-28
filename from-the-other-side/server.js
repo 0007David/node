@@ -16,8 +16,13 @@ import http from 'node:http';
         3. Open the browser to see your first served HTML.
 */
 
+console.log(import.meta.dirname)
+
 const server = http.createServer((req, res) => {
     res.statusCode = 200
+    // res.setHeader('Access-Control-Allow-Origin', '*')
+    // res.setHeader('Access-Control-Allow-Methods', 'GET')
+    // res.writeHead(200, {'Content-Type': 'text/html', 'Access-Control-Allow-Methods': 'POST'})
     res.setHeader('Content-Type', 'text/html')
     res.end('<html><h1>The server is working</h1></html>');
 });
