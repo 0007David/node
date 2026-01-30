@@ -53,7 +53,18 @@ We will be studying:
 - Serving static assets
 - Global vars in Node.js
 - Using a dependency to sanitize input
-- Event Emitters & Server-sent events
+- Event-Driver Architecture
+- Events: an event signal that something happened
+  - A user cicks a button
+  - A file finishes downloading
+  - A network request is received
+  - And many more...
+- Event Emitters 
+- Server-sent events: <br> A standard allowing servers to push real-time updates to clients over HTTP.
+  - chat apps
+  - Doorbell cams
+  - Anything where two-way communication is needed
+- 
 
 Diferencia res.writeHead() y res.setHeader():
 
@@ -65,7 +76,19 @@ Diferencia res.writeHead() y res.setHeader():
 ## Stretch Goals
 
 - Genter error handling
+  - A client requests /api/xyz which does not exist
+  - A client requests /api but uses a method other than GET or POST
+  - A client sends invalid JSON in a POST request
+- Add uuids to incoming data
+  - Use a dependency to generate the uuids
 - Handle POST Request
+  - Collect the incoming data chunks
+  - Parse it
+  - Sanitize it
+  - Get our existing data
+  - add the new data to the existing data
+  - Write the completed data to the JSON file
   - ignore authentication for now
 - Add better filtering
+- XSS Attack (Cross-Site Scripting) <br> attack is a security vulnerability that allows an attacker to inject malicious scripts into web pages.
 - Expand this api and sell it!
