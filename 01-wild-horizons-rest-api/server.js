@@ -25,7 +25,7 @@ const server = http.createServer(async (req, res) => {
 
     const urlObj = new URL(req.url, `http://${req.headers.host}`);
 
-    const queryObj = Object.fromEntries(urlObj.searchParams);    
+    const queryObj = Object.fromEntries(urlObj.searchParams);
     /*
         Challenge: 
         1. Check the ‘method’ property on the req object.
@@ -61,7 +61,7 @@ const server = http.createServer(async (req, res) => {
 
                 Keep our code tidy by doing the the filtering in a util function.
         */
-       let filteredData = getDataByQueryParams(destinations, queryObj);        
+        let filteredData = getDataByQueryParams(destinations, queryObj);
         sendJSONResponse(res, 200, filteredData);
 
     } else if (req.url.startsWith('/api/continent') && req.method === 'GET') {
